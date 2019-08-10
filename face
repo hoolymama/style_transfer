@@ -1,0 +1,153 @@
+#!/usr/bin/env python
+
+import argparse
+import errno
+import io
+import os
+import re
+import subprocess
+import sys
+import json
+import math
+import copy
+
+from wand.image import Image
+
+import neural_style as ns
+import face_detection as fd
+import spell.client
+
+from git import Repo
+
+
+def main():
+    parser = argparse.ArgumentParser(add_help=False)
+    parser.add_argument('-m', '--margin', type=int, default=0)
+    parser.add_argument('-r', '--resolution', type=int, default=512)
+
+    # args for neural style
+
+    parser.add_argument('--main_style_weight', type=float, default=5e4)
+    parser.add_argument('--detail_style_weight', type=float, default=4e2)
+    parser.add_argument('--max_iterations', type=int, default=500)
+    parser.add_argument('-l', '--local', action='store_true', default=False)
+    # parser.add_argument('--local', type=str,
+    #                     default='/gpu:0', choices=['/gpu:0', '/cpu:0'])
+
+    options, files = parser.parse_known_args()
+    print "Face detection options ........ "
+    print "Desired margin: ", options.margin
+    print "Resolution: ", options.resolution
+    print "Files: ", files[0]
+
+    print "Style transfer options ........ "
+    print "main_style_weight: ", options.main_style_weight
+    print "detail_style_weight: ", options.detail_style_weight
+    print "max_iterations: ", options.max_iterations
+    print "local: ", options.local
+
+    if not len(files):
+        print "Bailing out. No files"
+        raise ValueError("Please provide at least one filename")
+
+    for filename in files:
+
+        basename = os.path.splitext(os.path.basename(filename))[0]
+
+        images_dir = os.path.join(
+            os.path.dirname(os.path.realpath(__file__)),
+            "image_input",
+            basename
+        )
+        if not os.path.exists(images_dir):
+            os.makedirs(images_dir)
+
+        print "Preparing input file", filename
+        prepared_filename = fd.prepare(
+            filename, options.resolution, images_dir)
+
+        print "Getting face features for ", basename
+        faces = fd.get_faces(prepared_filename)
+
+        print "Making crops for ", basename
+        face_data = fd.make_crops(prepared_filename, faces, options.margin)
+
+        print "Setting style transfer params", basename
+        face_data = set_style_transfer_params(face_data, options)
+
+        print "Set the object name", basename
+        face_data["name"] = basename
+
+        print "Write JSON for ", basename
+        write_faces(face_data, prepared_filename)
+
+        print "Prep git repo for", basename
+        prep_repo(basename)
+
+        print "Generate styled images for", basename
+        run_stylizer(basename)
+
+
+def set_style_transfer_params(face_data, options):
+    result = copy.deepcopy(face_data)
+
+    x = result["resolution"]["x"]
+    y = result["resolution"]["y"]
+
+    result["filename_styled"] = "{}_styled{}".format(
+        *os.path.splitext(result["filename"]))
+    result["max_iterations"] = options.max_iterations
+    result["style_weight"] = options.main_style_weight
+
+    for face in result["faces"]:
+        face["filename_styled"] = "{}_styled{}".format(
+            *os.path.splitext(face["filename"]))
+        face["max_iterations"] = options.max_iterations
+        face["style_weight"] = options.detail_style_weight
+
+    return result
+
+
+# def do_style_transfer(images_dir, source_fn, resolution=None):
+#     dest_filename = "{}_styled{}".format(*os.path.splitext(source_fn))
+
+#     with io.open(os.path.join(images_dir, source_fn), 'rb') as image_file:
+#         with Image(file=image_file) as source_image:
+#             if (resolution):
+#                 source_image.transform(
+#                     resize="{:d}x{:d}".format(resolution["x"], resolution["y"]))
+#             source_image.save(filename=os.path.join(images_dir, dest_filename))
+#     return dest_filename
+
+
+def write_faces(features, filename):
+    json_filename = os.path.join(os.path.dirname(filename), "manifest.json")
+    if features:
+        with open(json_filename, 'w') as outfile:
+            json.dump(features, outfile, indent=4, sort_keys=True)
+    return "manifest.json"
+
+
+def prep_repo(name):
+    repo = Repo(".")
+    repo.index.add(repo.untracked_files)
+    commit = repo.index.commit("Added assets for {}".format(name))
+    return commit
+
+
+def run_stylizer(basename):
+    client = spell.client.from_environment()
+
+    kwargs = {
+        "attached_resources": {"runs/4/data": "datasets"},
+        "command": "./batch_style {}/manifest.json".format(basename),
+        "machine_type": "V100",
+        "framework": "tensorflow"
+    }
+    print "running stylizer with args: "
+    print kwargs
+
+    # run = client.runs.new(**kwargs)
+
+
+main()
