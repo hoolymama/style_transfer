@@ -211,7 +211,7 @@ def parse_args():
     default=800,
     help='Maximum number of optimizer iterations for each frame after the first frame. (default: %(default)s)')
 
-  args = parser.parse_args()
+  args = parser.parse_args(params)
 
   # normalize weights
   args.style_layer_weights   = normalize(args.style_layer_weights)
@@ -219,10 +219,10 @@ def parse_args():
   args.style_imgs_weights    = normalize(args.style_imgs_weights)
 
   # create directories for output
-  if args.video:
-    maybe_make_directory(args.video_output_dir)
-  else:
-    maybe_make_directory(args.img_output_dir)
+  # if args.video:
+  #   maybe_make_directory(args.video_output_dir)
+  # else:
+  maybe_make_directory(args.img_output_dir)
 
   return args
 
@@ -848,11 +848,10 @@ def render_video():
         tock = time.time()
         print('Frame {} elapsed time: {}'.format(frame, tock - tick))
 
-def main():
+def main(params):
   global args
-  args = parse_args()
-  if args.video: render_video()
-  else: render_single_image()
+  args = parse_args(params)
+  render_single_image()
 
 if __name__ == '__main__':
   main()
