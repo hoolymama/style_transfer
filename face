@@ -131,8 +131,7 @@ def write_faces(features, filename):
 def prep_repo(name):
     repo = Repo(".")
     repo.index.add(repo.untracked_files)
-    commit = repo.index.commit("Added assets for {}".format(name))
-    return commit
+    return repo.git.commit('-a', '-m', "Added assets for {}".format(name))
 
 
 def run_stylizer(basename):
