@@ -144,30 +144,34 @@ def write_faces(features, filename):
 def prep_repo(name):
     repo = Repo(".")
     repo.index.add(repo.untracked_files)
-    return repo.git.commit('-a', '-m', "Added assets for {}".format(name))
+    commit = repo.git.commit('-a', '-m', "Added assets for {}".format(name))
+    origin = repo.remote(name='origin')
+    origin.push()
+    return commit
 
 
 def run_spell_test(basename):
     client = spell.client.from_environment()
 
     kwargs = {
+        "github_url": "https://gitlab.com/Hoolymama/style_transfer.git",
         "command": "bash ./test_run image_input/manifest.json",
         "machine_type": "CPU",
     }
 
-    print("workflow: {}".format(client.active_workflow))
+    # print("workflow: {}".format(client.active_workflow))
 
-    # basic run
-    run = client.runs.new(
-        command="echo workflow $VAR",
-        envvars={
-            "VAR": "SUCCESS!!!"
-        }
-    )
-    print("created run: {}".format(run))
-    print("run logs:")
-    for line in run.logs(follow=True):
-        print("\t{}".format(line))
+    # # basic run
+    # run = client.runs.new(
+    #     command="echo workflow $VAR",
+    #     envvars={
+    #         "VAR": "SUCCESS!!!"
+    #     }
+    # )
+    # print("created run: {}".format(run))
+    # print("run logs:")
+    # for line in run.logs(follow=True):
+    #     print("\t{}".format(line))
 
 
 def run_stylizer_on_spell(basename):
