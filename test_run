@@ -5,3 +5,5 @@ import sys
 
 
 print("HELLO FROM THE TEST")
+
+os.listdir(".")
