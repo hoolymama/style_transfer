@@ -180,13 +180,13 @@
                 ]
             }, 
             "filename": "face_0.png", 
-            "filename_styled": "face_0_styled.png", 
+            "filename_styled": "face_0_styled", 
             "max_iterations": 50, 
             "style_weight": 400.0
         }
     ], 
     "filename": "main.png", 
-    "filename_styled": "main_styled.png", 
+    "filename_styled": "main_styled", 
     "max_iterations": 50, 
     "name": "basquiatOrig", 
     "resolution": {
