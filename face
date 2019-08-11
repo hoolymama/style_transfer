@@ -31,6 +31,8 @@ def main():
     parser.add_argument('--detail_style_weight', type=float, default=4e2)
     parser.add_argument('--max_iterations', type=int, default=500)
     parser.add_argument('-l', '--local', action='store_true', default=False)
+    parser.add_argument('-t', '--test_spell',
+                        action='store_true', default=False)
     # parser.add_argument('--local', type=str,
     #                     default='/gpu:0', choices=['/gpu:0', '/cpu:0'])
 
@@ -46,6 +48,7 @@ def main():
     print "detail_style_weight: ", options.detail_style_weight
     print "max_iterations: ", options.max_iterations
     print "local: ", options.local
+    print "test_spell: ", options.test_spell
 
     if not len(files) == 1:
         print "Bailing out."
