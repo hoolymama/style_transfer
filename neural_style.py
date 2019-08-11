@@ -11,7 +11,7 @@ import os
 '''
   parsing and configuration
 '''
-def parse_args():
+def parse_args(params):
 
   desc = "TensorFlow implementation of 'A Neural Algorithm for Artistic Style'"  
   parser = argparse.ArgumentParser(description=desc)
