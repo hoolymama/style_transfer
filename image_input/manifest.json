@@ -181,13 +181,13 @@
             }, 
             "filename": "face_0.png", 
             "filename_styled": "face_0_styled", 
-            "max_iterations": 50, 
+            "max_iterations": 1000, 
             "style_weight": 400
         }
     ], 
     "filename": "main.png", 
     "filename_styled": "main_styled", 
-    "max_iterations": 50, 
+    "max_iterations": 1000, 
     "name": "basquiatOrig", 
     "resolution": {
         "x": 512, 
