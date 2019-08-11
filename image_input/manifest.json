@@ -182,7 +182,7 @@
             "filename": "face_0.png", 
             "filename_styled": "face_0_styled", 
             "max_iterations": 50, 
-            "style_weight": 400.0
+            "style_weight": 400
         }
     ], 
     "filename": "main.png", 
@@ -193,5 +193,5 @@
         "x": 512, 
         "y": 512
     }, 
-    "style_weight": 50000.0
+    "style_weight": 5000
 }
