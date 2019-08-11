@@ -159,6 +159,12 @@ def run_spell_test(basename):
         "machine_type": "CPU",
     }
 
+    run = client.runs.new(**kwargs)
+    print("created run: {}".format(run))
+    print("run logs:")
+    for line in run.logs(follow=True):
+        print("\t{}".format(line))
+
     # print("workflow: {}".format(client.active_workflow))
 
     # # basic run
