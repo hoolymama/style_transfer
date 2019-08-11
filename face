@@ -38,6 +38,7 @@ def main():
     print "Face detection options ........ "
     print "Desired margin: ", options.margin
     print "Resolution: ", options.resolution
+
     print "Files: ", files[0]
 
     print "Style transfer options ........ "
@@ -46,46 +47,45 @@ def main():
     print "max_iterations: ", options.max_iterations
     print "local: ", options.local
 
-    if not len(files):
-        print "Bailing out. No files"
-        raise ValueError("Please provide at least one filename")
+    if not len(files) == 1:
+        print "Bailing out."
+        raise ValueError("Please provide at exactly one image filename")
 
-    for filename in files:
+    filename = files[0]
 
-        basename = os.path.splitext(os.path.basename(filename))[0]
+    basename = os.path.splitext(os.path.basename(filename))[0]
 
-        images_dir = os.path.join(
-            os.path.dirname(os.path.realpath(__file__)),
-            "image_input",
-            basename
-        )
-        if not os.path.exists(images_dir):
-            os.makedirs(images_dir)
+    images_dir = os.path.join(
+        os.path.dirname(os.path.realpath(__file__)),
+        "image_input"
+    )
+    if not os.path.exists(images_dir):
+        os.makedirs(images_dir)
 
-        print "Preparing input file", filename
-        prepared_filename = fd.prepare(
-            filename, options.resolution, images_dir)
+    print "Preparing input file", filename
+    prepared_filename = fd.prepare(
+        filename, options.resolution, images_dir)
 
-        print "Getting face features for ", basename
-        faces = fd.get_faces(prepared_filename)
+    print "Getting face features for ", basename
+    faces = fd.get_faces(prepared_filename)
 
-        print "Making crops for ", basename
-        face_data = fd.make_crops(prepared_filename, faces, options.margin)
+    print "Making crops for ", basename
+    face_data = fd.make_crops(prepared_filename, faces, options.margin)
 
-        print "Setting style transfer params", basename
-        face_data = set_style_transfer_params(face_data, options)
+    print "Setting style transfer params", basename
+    face_data = set_style_transfer_params(face_data, options)
 
-        print "Set the object name", basename
-        face_data["name"] = basename
+    print "Set the object name", basename
+    face_data["name"] = basename
 
-        print "Write JSON for ", basename
-        write_faces(face_data, prepared_filename)
+    print "Write JSON for ", basename
+    write_faces(face_data, prepared_filename)
 
-        print "Prep git repo for", basename
-        prep_repo(basename)
+    print "Prep git repo for", basename
+    prep_repo(basename)
 
-        print "Generate styled images for", basename
-        run_stylizer(basename)
+    print "Generate styled images for", basename
+    run_stylizer_on_spell(basename)
 
 
 def set_style_transfer_params(face_data, options):
@@ -134,7 +134,7 @@ def prep_repo(name):
     return repo.git.commit('-a', '-m', "Added assets for {}".format(name))
 
 
-def run_stylizer(basename):
+def run_stylizer_on_spell(basename):
     client = spell.client.from_environment()
 
     kwargs = {
@@ -146,7 +146,15 @@ def run_stylizer(basename):
     print "running stylizer with args: "
     print kwargs
 
-    # run = client.runs.new(**kwargs)
+    run = client.runs.new(**kwargs)
+    run.wait_status(client.runs.COMPLETE)
+
+    runid = run.id
+    out_dir = os.path.join("runs", runid, basename)
+    if not os.path.exists(out_dir):
+        os.makedirs(out_dir)
+
+    run.cp("image_output", out_dir)
 
 
 main()

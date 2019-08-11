@@ -1,54 +1,134 @@
+#!/usr/bin/env python
 
-mkdir -p image_output
+# import argparse
+import errno
+import io
+import os
+import re
+import subprocess
+import sys
+import json
+import math
+import copy
+
+import neural_style as ns
+
+
+def main():
+    parser = argparse.ArgumentParser(add_help=False)
+    parser.add_argument('-m', '--margin', type=int, default=0)
+    parser.add_argument('-c', '--cached', action='store_true')
+    parser.add_argument('-r', '--resolution', type=int, default=512)
+
+    # args for neural style
+
+    parser.add_argument('--main_style_weight', type=float, default=5e4)
+    parser.add_argument('--detail_style_weight', type=float, default=4e2)
+    parser.add_argument('--max_iterations', type=int, default=500)
+    parser.add_argument('--device', type=str,
+                        default='/gpu:0', choices=['/gpu:0', '/cpu:0'])
+
+    options, files = parser.parse_known_args()
+    print "Face detection options ........ "
+    print "Desired margin: ", options.margin
+    print "Resolution: ", options.resolution
+    print "Files: ", files[0]
+
+    print "Style transfer options ........ "
+    print "main_style_weight: ", options.main_style_weight
+    print "detail_style_weight: ", options.detail_style_weight
+    print "max_iterations: ", options.max_iterations
+    print "device: ", options.device
+
+    if not len(files):
+        print "Bailing out. No files"
+        raise ValueError("Please provide at least one filename")
+
+    for filename in files:
+
+        basename = os.path.splitext(os.path.basename(filename))[0]
+
+        images_dir = os.path.join(
+            os.path.dirname(os.path.realpath(__file__)),
+            "image_input",
+            basename
+        )
+        if not os.path.exists(images_dir):
+            os.makedirs(images_dir)
+
+        print "Preparing input file", filename
+        square_filename = fd.prepare(filename, options.resolution, images_dir)
+
+        print "Getting face features for ", square_filename
+        faces = fd.get_faces(square_filename)
+
+        print "Making crops for ", square_filename
+        face_data = fd.make_crops(square_filename, faces, options.margin)
+
+        print "Running style transfer for", square_filename
+        face_data = style_transfer(images_dir, face_data)
+
+        print "Write JSON for ", square_filename
+        write_faces(face_data, square_filename)
+
+
+def main():
+    manifest = sys.argv[1]
+    if sys.argv[1]:
+        with open(sys.argv[1], 'r') as manifest_file:
+            manifest = json.load(manifest_file)
+
+
+main()
+
+
+mkdir - p image_output
 
 for styleImg in kateRob
 do
-    for f in grayson basquiatOrig
-    do 
-    
-        for styleWeight in 5000
-        do
-            out=${styleImg}_${styleWeight}_${f}
+  for f in grayson basquiatOrig
+   do
+
+      for styleWeight in 5000
+       do
+           out =${styleImg}_${styleWeight}_${f}
             python neural_style.py \
-            --original_colors \
-            --model_weights datasets/imagenet-vgg-verydeep-19.mat \
-            --content_img ${f}.jpg  \
-            --style_imgs ${styleImg}.jpg  \
-            --max_iterations 500  \
-            --max_size 1000    \
-            --device /gpu:0 \
-            --img_name $out \
-            --content_weight 10 \
-            --style_weight ${styleWeight};
+                - -original_colors \
+                - -model_weights datasets/imagenet-vgg-verydeep-19.mat \
+                - -content_img ${f}.jpg  \
+                - -style_imgs ${styleImg}.jpg  \
+                - -max_iterations 500  \
+                - -max_size 1000    \
+            - -device / gpu: 0 \
+                - -img_name $out \
+                - -content_weight 10 \
+                - -style_weight ${styleWeight};
 
         done
     done
 
     for f in grayson_0 basquiatOrig_0
-    do 
-    
-        for styleWeight in 400 
+    do
+
+       for styleWeight in 400
         do
-            out=${styleImg}_${styleWeight}_${f}
+           out =${styleImg}_${styleWeight}_${f}
             python neural_style.py \
-            --original_colors \
-            --model_weights datasets/imagenet-vgg-verydeep-19.mat \
-            --content_img ${f}.jpg  \
-            --style_imgs ${styleImg}.jpg  \
-            --max_iterations 500  \
-            --max_size 1000    \
-            --device /gpu:0 \
-            --img_name $out \
-            --content_weight 10 \
-            --style_weight ${styleWeight};
+                - -original_colors \
+                - -model_weights datasets/imagenet-vgg-verydeep-19.mat \
+                - -content_img ${f}.jpg  \
+                - -style_imgs ${styleImg}.jpg  \
+                - -max_iterations 500  \
+                - -max_size 1000    \
+            - -device / gpu:0 \
+                - -img_name $out \
+                - -content_weight 10 \
+                - -style_weight ${styleWeight};
 
         done
     done
 done
 
-
-
- 
 
 # python neural_style.py \
 # --model_weights datasets/imagenet-vgg-verydeep-19.mat \
