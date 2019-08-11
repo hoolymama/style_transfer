@@ -40,7 +40,7 @@ def main():
             ]
             ns.main(args)
 
-            for face in faces:
+            for face in manifest["faces"]:
                 args = [
                     "--original_colors",
                     "--model_weights",
