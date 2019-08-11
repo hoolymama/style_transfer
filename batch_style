@@ -28,13 +28,13 @@ def main():
                 "--style_imgs",
                 "kate.jpg",
                 "--max_iterations",
-                manifest["max_iterations"],
+                str(manifest["max_iterations"]),
                 "--device",
                 "gpu:0",
                 "--content_weight",
-                10,
+                "10",
                 "--style_weight",
-                manifest["style_weight"],
+                str(manifest["style_weight"]),
                 "--img_name",
                 manifest["filename_styled"]
             ]
@@ -50,13 +50,13 @@ def main():
                     "--style_imgs",
                     "kate.jpg",
                     "--max_iterations",
-                    face["max_iterations"],
+                    str(face["max_iterations"]),
                     "--device",
                     "gpu:0",
                     "--content_weight",
-                    10,
+                    "10",
                     "--style_weight",
-                    face["style_weight"],
+                    str(face["style_weight"]),
                     "--img_name",
                     face["filename_styled"]
                 ]
