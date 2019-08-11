@@ -2,180 +2,180 @@
     "faces": [
         {
             "crop": {
-                "maxx": 477, 
-                "maxy": 475, 
-                "minx": 168, 
-                "miny": 171
+                "maxx": 468, 
+                "maxy": 488, 
+                "minx": 167, 
+                "miny": 200
             }, 
             "features": {
                 "left_eye": [
                     {
                         "name": "left_eye", 
                         "order": -1, 
-                        "x": 240, 
-                        "y": 236
+                        "x": 244, 
+                        "y": 268
                     }, 
                     {
                         "name": "left_eye_top_boundary", 
                         "order": -1, 
-                        "x": 237, 
-                        "y": 229
+                        "x": 236, 
+                        "y": 260
                     }, 
                     {
                         "name": "left_eye_pupil", 
                         "order": -1, 
-                        "x": 232, 
-                        "y": 238
+                        "x": 233, 
+                        "y": 271
                     }, 
                     {
                         "name": "left_of_left_eyebrow", 
                         "order": 0, 
-                        "x": 180, 
-                        "y": 188
+                        "x": 179, 
+                        "y": 230
                     }, 
                     {
                         "name": "left_eyebrow_upper_midpoint", 
                         "order": 1, 
-                        "x": 237, 
-                        "y": 183
+                        "x": 229, 
+                        "y": 213
                     }, 
                     {
                         "name": "right_of_left_eyebrow", 
                         "order": 2, 
-                        "x": 286, 
-                        "y": 211
+                        "x": 280, 
+                        "y": 234
                     }, 
                     {
                         "name": "left_eye_right_corner", 
                         "order": 3, 
                         "x": 271, 
-                        "y": 243
+                        "y": 272
                     }, 
                     {
                         "name": "left_eye_bottom_boundary", 
                         "order": 4, 
-                        "x": 235, 
-                        "y": 245
+                        "x": 241, 
+                        "y": 280
                     }, 
                     {
                         "name": "left_eye_left_corner", 
                         "order": 5, 
-                        "x": 198, 
-                        "y": 230
+                        "x": 202, 
+                        "y": 269
                     }
                 ], 
                 "mouth": [
                     {
                         "name": "mouth_center", 
                         "order": -1, 
-                        "x": 301, 
-                        "y": 430
+                        "x": 319, 
+                        "y": 449
                     }, 
                     {
                         "name": "mouth_left", 
                         "order": 0, 
-                        "x": 235, 
-                        "y": 413
+                        "x": 256, 
+                        "y": 444
                     }, 
                     {
                         "name": "upper_lip", 
                         "order": 1, 
-                        "x": 306, 
-                        "y": 413
+                        "x": 318, 
+                        "y": 432
                     }, 
                     {
                         "name": "mouth_right", 
                         "order": 2, 
-                        "x": 357, 
-                        "y": 427
+                        "x": 380, 
+                        "y": 448
                     }, 
                     {
                         "name": "lower_lip", 
                         "order": 3, 
-                        "x": 296, 
-                        "y": 463
+                        "x": 320, 
+                        "y": 476
                     }
                 ], 
                 "nose": [
                     {
                         "name": "nose_tip", 
                         "order": 0, 
-                        "x": 320, 
-                        "y": 359
+                        "x": 323, 
+                        "y": 368
                     }, 
                     {
                         "name": "nose_bottom_right", 
                         "order": 1, 
-                        "x": 355, 
-                        "y": 358
+                        "x": 364, 
+                        "y": 377
                     }, 
                     {
                         "name": "nose_bottom_center", 
                         "order": 2, 
-                        "x": 311, 
-                        "y": 375
+                        "x": 319, 
+                        "y": 393
                     }, 
                     {
                         "name": "nose_bottom_left", 
                         "order": 3, 
-                        "x": 266, 
-                        "y": 352
+                        "x": 276, 
+                        "y": 375
                     }
                 ], 
                 "right_eye": [
                     {
                         "name": "right_eye", 
                         "order": -1, 
-                        "x": 394, 
-                        "y": 250
+                        "x": 392, 
+                        "y": 268
                     }, 
                     {
                         "name": "right_eye_top_boundary", 
                         "order": -1, 
-                        "x": 408, 
-                        "y": 243
+                        "x": 402, 
+                        "y": 260
                     }, 
                     {
                         "name": "right_eye_pupil", 
                         "order": -1, 
-                        "x": 407, 
-                        "y": 253
+                        "x": 403, 
+                        "y": 271
                     }, 
                     {
                         "name": "left_of_right_eyebrow", 
                         "order": 0, 
-                        "x": 371, 
-                        "y": 218
+                        "x": 360, 
+                        "y": 233
                     }, 
                     {
                         "name": "right_eyebrow_upper_midpoint", 
                         "order": 1, 
-                        "x": 423, 
-                        "y": 198
+                        "x": 410, 
+                        "y": 212
                     }, 
                     {
                         "name": "right_of_right_eyebrow", 
                         "order": 2, 
-                        "x": 465, 
-                        "y": 213
+                        "x": 456, 
+                        "y": 229
                     }, 
                     {
                         "name": "right_eye_right_corner", 
                         "order": 3, 
-                        "x": 434, 
-                        "y": 251
+                        "x": 433, 
+                        "y": 269
                     }, 
                     {
                         "name": "right_eye_bottom_boundary", 
                         "order": 4, 
-                        "x": 399, 
-                        "y": 262
+                        "x": 395, 
+                        "y": 281
                     }, 
                     {
                         "name": "right_eye_left_corner", 
                         "order": 5, 
-                        "x": 369, 
-                        "y": 250
+                        "x": 360, 
+                        "y": 274
                     }
                 ]
             }, 
@@ -188,7 +188,7 @@
     "filename": "main.png", 
     "filename_styled": "main_styled.png", 
     "max_iterations": 100, 
-    "name": "Louise-BourgeoisSquare-6", 
+    "name": "Pablo-Picasso-Square-7", 
     "resolution": {
         "x": 640, 
         "y": 640
