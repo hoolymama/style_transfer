@@ -30,7 +30,7 @@ def main():
     parser.add_argument('--main_style_weight', type=float, default=5e4)
     parser.add_argument('--detail_style_weight', type=float, default=4e2)
     parser.add_argument('--max_iterations', type=int, default=500)
-    parser.add_argument('-l', '--local', action='store_true', default=False)
+    # parser.add_argument('-l', '--local', action='store_true', default=False)
     parser.add_argument('-t', '--test_spell',
                         action='store_true', default=False)
     # parser.add_argument('--local', type=str,
@@ -47,7 +47,7 @@ def main():
     print "main_style_weight: ", options.main_style_weight
     print "detail_style_weight: ", options.detail_style_weight
     print "max_iterations: ", options.max_iterations
-    print "local: ", options.local
+    # print "local: ", options.local
     print "test_spell: ", options.test_spell
 
     if not len(files) == 1:
@@ -185,15 +185,22 @@ def run_stylizer_on_spell(basename):
 
     kwargs = {
         "attached_resources": {"runs/4/data": "datasets"},
-        "command": "./batch_style image_input/manifest.json",
+        "command": "python ./batch_style image_input/manifest.json",
         "machine_type": "V100",
-        "framework": "tensorflow"
+        "framework": "tensorflow",
+        "description": "style_transfer: {}".format(basename)
     }
 
     print "running stylizer with args: "
     print kwargs
 
     run = client.runs.new(**kwargs)
+    print("created run: {}".format(run))
+    print("run logs:")
+    for line in run.logs(follow=True):
+        print("\t{}".format(line))
+
+
     run.wait_status(client.runs.COMPLETE)
 
     runid = run.id

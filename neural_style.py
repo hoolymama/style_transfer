@@ -853,5 +853,5 @@ def main(params):
   args = parse_args(params)
   render_single_image()
 
-if __name__ == '__main__':
-  main()
+# if __name__ == '__main__':
+#   main()
