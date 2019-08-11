@@ -65,24 +65,26 @@ def main():
     if not os.path.exists(images_dir):
         os.makedirs(images_dir)
 
-    print "Preparing input file", filename
-    prepared_filename = fd.prepare(
-        filename, options.resolution, images_dir)
+    if not options.test_spell:
 
-    print "Getting face features for ", basename
-    faces = fd.get_faces(prepared_filename)
+        print "Preparing input file", filename
+        prepared_filename = fd.prepare(
+            filename, options.resolution, images_dir)
 
-    print "Making crops for ", basename
-    face_data = fd.make_crops(prepared_filename, faces, options.margin)
+        print "Getting face features for ", basename
+        faces = fd.get_faces(prepared_filename)
 
-    print "Setting style transfer params", basename
-    face_data = set_style_transfer_params(face_data, options)
+        print "Making crops for ", basename
+        face_data = fd.make_crops(prepared_filename, faces, options.margin)
 
-    print "Set the object name", basename
-    face_data["name"] = basename
+        print "Setting style transfer params", basename
+        face_data = set_style_transfer_params(face_data, options)
 
-    print "Write JSON for ", basename
-    write_faces(face_data, prepared_filename)
+        print "Set the object name", basename
+        face_data["name"] = basename
+
+        print "Write JSON for ", basename
+        write_faces(face_data, prepared_filename)
 
     print "Prep git repo for", basename
     prep_repo(basename)
@@ -148,7 +150,7 @@ def run_stylizer_on_spell(basename, test=False):
     }
     if test:
         kwargs = {
-            "command": "./test_run image_input/manifest.json",
+            "command": "bash ./test_run image_input/manifest.json",
             "machine_type": "CPU",
         }
 
