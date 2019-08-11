@@ -4,4 +4,4 @@ import os
 import sys
 
 
-print "HELLO FROM THE TEST"
+print("HELLO FROM THE TEST")

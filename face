@@ -65,7 +65,15 @@ def main():
     if not os.path.exists(images_dir):
         os.makedirs(images_dir)
 
-    if not options.test_spell:
+    if options.test_spell:
+
+        print "Prep git repo for", basename
+        prep_repo(basename)
+
+        print "Run test on spell", basename
+        run_spell_test(basename)
+
+    else:
 
         print "Preparing input file", filename
         prepared_filename = fd.prepare(
@@ -86,11 +94,11 @@ def main():
         print "Write JSON for ", basename
         write_faces(face_data, prepared_filename)
 
-    print "Prep git repo for", basename
-    prep_repo(basename)
+        print "Prep git repo for", basename
+        prep_repo(basename)
 
-    print "Generate styled images for", basename
-    run_stylizer_on_spell(basename, test=options.test_spell)
+        print "Generate styled images for", basename
+        run_stylizer_on_spell(basename)
 
 
 def set_style_transfer_params(face_data, options):
@@ -139,7 +147,30 @@ def prep_repo(name):
     return repo.git.commit('-a', '-m', "Added assets for {}".format(name))
 
 
-def run_stylizer_on_spell(basename, test=False):
+def run_spell_test(basename):
+    client = spell.client.from_environment()
+
+    kwargs = {
+        "command": "bash ./test_run image_input/manifest.json",
+        "machine_type": "CPU",
+    }
+
+    print("workflow: {}".format(client.active_workflow))
+
+    # basic run
+    run = client.runs.new(
+        command="echo workflow $VAR",
+        envvars={
+            "VAR": "SUCCESS!!!"
+        }
+    )
+    print("created run: {}".format(run))
+    print("run logs:")
+    for line in run.logs(follow=True):
+        print("\t{}".format(line))
+
+
+def run_stylizer_on_spell(basename):
     client = spell.client.from_environment()
 
     kwargs = {
@@ -148,11 +179,6 @@ def run_stylizer_on_spell(basename, test=False):
         "machine_type": "V100",
         "framework": "tensorflow"
     }
-    if test:
-        kwargs = {
-            "command": "bash ./test_run image_input/manifest.json",
-            "machine_type": "CPU",
-        }
 
     print "running stylizer with args: "
     print kwargs
@@ -162,11 +188,10 @@ def run_stylizer_on_spell(basename, test=False):
 
     runid = run.id
 
-    if not test:
-        out_dir = os.path.join("runs", runid)
-        if not os.path.exists(out_dir):
-            os.makedirs(out_dir)
-        run.cp("image_output", out_dir)
+    out_dir = os.path.join("runs", runid)
+    if not os.path.exists(out_dir):
+        os.makedirs(out_dir)
+    run.cp("image_output", out_dir)
 
 
 main()
