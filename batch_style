@@ -35,6 +35,8 @@ def main():
                 "10",
                 "--style_weight",
                 str(manifest["style_weight"]),
+                "--max_size",
+                "1000",
                 "--img_name",
                 manifest["filename_styled"]
             ]
@@ -57,6 +59,8 @@ def main():
                     "10",
                     "--style_weight",
                     str(face["style_weight"]),
+                    "--max_size",
+                    "1000",
                     "--img_name",
                     face["filename_styled"]
                 ]
