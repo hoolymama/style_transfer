@@ -154,7 +154,7 @@ def run_spell_test(basename):
     client = spell.client.from_environment()
 
     kwargs = {
-        "github_url": "https://gitlab.com/Hoolymama/style_transfer.git",
+        "github_url": "git@gitlab.com:Hoolymama/style_transfer.git",
         "command": "bash ./test_run image_input/manifest.json",
         "machine_type": "CPU",
     }
