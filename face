@@ -16,7 +16,7 @@ from wand.image import Image
 import neural_style as ns
 import face_detection as fd
 import spell.client
-
+from shutil import copy2
 from git import Repo
 
 
@@ -98,7 +98,11 @@ def main():
         prep_repo(basename)
 
         print "Generate styled images for", basename
-        run_stylizer_on_spell(basename)
+        runid = run_stylizer_on_spell(basename)
+
+        print "Make image pack for Maya"
+        asset_directory = collect_styled_assets(runid)
+        print "Styled assets can be found in: ", asset_directory
 
 
 def set_style_transfer_params(face_data, options):
@@ -107,13 +111,13 @@ def set_style_transfer_params(face_data, options):
     x = result["resolution"]["x"]
     y = result["resolution"]["y"]
 
-    result["filename_styled"] = "{}_styled".format( os.path.splitext(result["filename"])[0])
+    result["filename_styled"] = "{}_styled{}".format( *os.path.splitext(result["filename"]))
     result["max_iterations"] = options.max_iterations
     result["style_weight"] = options.main_style_weight
 
     for face in result["faces"]:
-        face["filename_styled"] = "{}_styled".format(
-            os.path.splitext(face["filename"])[0])
+        face["filename_styled"] = "{}_styled{}".format(
+            *os.path.splitext(face["filename"]))
         face["max_iterations"] = options.max_iterations
         face["style_weight"] = options.detail_style_weight
 
@@ -205,10 +209,36 @@ def run_stylizer_on_spell(basename):
 
     runid = run.id
 
+
     out_dir = os.path.join("runs", str(runid))
     if not os.path.exists(out_dir):
         os.makedirs(out_dir)
     run.cp("image_output", out_dir)
+
+    return runid
+
+
+def collect_styled_assets(runid):
+    directory = os.path.join("runs", str(runid))
+    styled_directories = os.listdir(directory) 
+
+    manifest_path = "image_input/manifest.json"
+    with open(manifest_path, 'r') as manifest_file:
+        manifest = json.load(manifest_file)
+        name = "{}_{:d}".format(manifest["name"], runid) 
+
+
+    asset_directory = os.path.join(directory, "{}_{:d}".format(manifest["name"], runid) )
+    if not os.path.exists(asset_directory):
+        os.makedirs(asset_directory)
+
+    for styled_name in styled_directories:
+        img = os.path.join(directory, styled_name, "{}.png".format(styled_name))
+        copy2(img, os.path.join(asset_directory))
+    
+    copy2(manifest_path, asset_directory)
+
+    return asset_directory
 
 
 main()

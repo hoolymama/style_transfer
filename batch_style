@@ -38,7 +38,7 @@ def main():
                 "--max_size",
                 "1000",
                 "--img_name",
-                manifest["filename_styled"]
+                os.path.splitext(manifest["filename_styled"])[0]
             ]
             ns.main(args)
 
@@ -62,7 +62,7 @@ def main():
                     "--max_size",
                     "1000",
                     "--img_name",
-                    face["filename_styled"]
+                    os.path.splitext(face["filename_styled"])[0]
                 ]
                 ns.main(args)
 
