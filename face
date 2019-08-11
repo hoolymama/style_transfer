@@ -155,7 +155,7 @@ def run_spell_test(basename):
 
     kwargs = {
         "github_url": "https://github.com/hoolymama/style_transfer.git",
-        "command": "bash ./test_run image_input/manifest.json",
+        "command": "python ./test_run image_input/manifest.json",
         "machine_type": "CPU",
     }
 
