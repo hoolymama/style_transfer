@@ -181,13 +181,13 @@
             }, 
             "filename": "face_0.png", 
             "filename_styled": "face_0_styled.png", 
-            "max_iterations": 100, 
+            "max_iterations": 250, 
             "style_weight": 400
         }
     ], 
     "filename": "main.png", 
     "filename_styled": "main_styled.png", 
-    "max_iterations": 100, 
+    "max_iterations": 250, 
     "name": "Yayoi-Kusama-Square", 
     "resolution": {
         "x": 640, 
