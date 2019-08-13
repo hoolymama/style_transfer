@@ -182,7 +182,7 @@
             "filename": "face_0.png", 
             "filename_styled": "face_0_styled.png", 
             "max_iterations": 250, 
-            "style_image": "kateRob.jpg", 
+            "style_image": "kateFractal.jpg", 
             "style_weight": 400
         }
     ], 
@@ -194,6 +194,6 @@
         "x": 640, 
         "y": 640
     }, 
-    "style_image": "kateRob.jpg", 
+    "style_image": "kateFractal.jpg", 
     "style_weight": 5000
 }
