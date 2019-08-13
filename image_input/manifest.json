@@ -181,19 +181,19 @@
             }, 
             "filename": "face_0.png", 
             "filename_styled": "face_0_styled.png", 
-            "max_iterations": 200, 
-            "style_image": "kateBlend.jpg", 
+            "max_iterations": 250, 
+            "style_image": "kateFractal.jpg", 
             "style_weight": 400
         }
     ], 
     "filename": "main.png", 
     "filename_styled": "main_styled.png", 
-    "max_iterations": 200, 
+    "max_iterations": 250, 
     "name": "Jean-Michel-BasquiatSquare", 
     "resolution": {
         "x": 640, 
         "y": 640
     }, 
-    "style_image": "kateBlend.jpg", 
+    "style_image": "kateFractal.jpg", 
     "style_weight": 5000
 }
