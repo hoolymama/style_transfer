@@ -27,6 +27,7 @@ def main():
 
     # args for neural style
 
+    parser.add_argument('--style_image', type=str, default='kate.jpg')
     parser.add_argument('--main_style_weight', type=float, default=5000)
     parser.add_argument('--detail_style_weight', type=float, default=400)
     parser.add_argument('--max_iterations', type=int, default=500)
@@ -48,6 +49,8 @@ def main():
     print "Files: ", files[0]
 
     print "Style transfer options ........ "
+    print "Style image: ", options.style_image
+
     print "main_style_weight: ", options.main_style_weight
     print "detail_style_weight: ", options.detail_style_weight
     print "max_iterations: ", options.max_iterations
@@ -118,12 +121,14 @@ def set_style_transfer_params(face_data, options):
     result["filename_styled"] = "{}_styled{}".format( *os.path.splitext(result["filename"]))
     result["max_iterations"] = options.max_iterations
     result["style_weight"] = options.main_style_weight
+    result["style_image"] = options.style_image
 
     for face in result["faces"]:
         face["filename_styled"] = "{}_styled{}".format(
             *os.path.splitext(face["filename"]))
         face["max_iterations"] = options.max_iterations
         face["style_weight"] = options.detail_style_weight
+        face["style_image"] = options.style_image
 
     return result
 
