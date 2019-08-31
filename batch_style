@@ -21,7 +21,7 @@ def main():
             manifest = json.load(manifest_file)
 
             args = [
-                "--original_colors",
+                # "--original_colors",
                 "--model_weights",
                 "datasets/imagenet-vgg-verydeep-19.mat",
                 "--content_img",
@@ -43,29 +43,29 @@ def main():
             ]
             ns.main(args)
 
-            for face in manifest["faces"]:
-                args = [
-                    "--original_colors",
-                    "--model_weights",
-                    "datasets/imagenet-vgg-verydeep-19.mat",
-                    "--content_img",
-                    face["filename"],
-                    "--style_imgs",
-                    face["style_image"],
-                    "--max_iterations",
-                    str(face["max_iterations"]),
-                    "--device",
-                    "/gpu:0",
-                    "--content_weight",
-                    "10",
-                    "--style_weight",
-                    str(face["style_weight"]),
-                    "--max_size",
-                    "1000",
-                    "--img_name",
-                    os.path.splitext(face["filename_styled"])[0],
-                ]
-                ns.main(args)
+            # for face in manifest["faces"]:
+            #     args = [
+            #         "--original_colors",
+            #         "--model_weights",
+            #         "datasets/imagenet-vgg-verydeep-19.mat",
+            #         "--content_img",
+            #         face["filename"],
+            #         "--style_imgs",
+            #         face["style_image"],
+            #         "--max_iterations",
+            #         str(face["max_iterations"]),
+            #         "--device",
+            #         "/gpu:0",
+            #         "--content_weight",
+            #         "10",
+            #         "--style_weight",
+            #         str(face["style_weight"]),
+            #         "--max_size",
+            #         "1000",
+            #         "--img_name",
+            #         os.path.splitext(face["filename_styled"])[0],
+            #     ]
+            #     ns.main(args)
 
 
 main()

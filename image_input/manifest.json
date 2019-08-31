@@ -182,8 +182,8 @@
             "filename": "face_0.png", 
             "filename_styled": "face_0_styled.png", 
             "max_iterations": 500, 
-            "style_image": "kateWithDetail.jpg", 
-            "style_weight": 400.0
+            "style_image": "kateWithDetailOverlay.png", 
+            "style_weight": 400
         }
     ], 
     "filename": "main.png", 
@@ -194,6 +194,6 @@
         "x": 1024, 
         "y": 1024
     }, 
-    "style_image": "kateWithDetail.jpg", 
-    "style_weight": 20000.0
+    "style_image": "kateWithDetailOverlay.png", 
+    "style_weight": 10000.0
 }
