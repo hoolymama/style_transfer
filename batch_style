@@ -21,7 +21,7 @@ def main():
             manifest = json.load(manifest_file)
 
             args = [
-                # "--original_colors",
+                "--original_colors",
                 "--model_weights",
                 "datasets/imagenet-vgg-verydeep-19.mat",
                 "--content_img",
