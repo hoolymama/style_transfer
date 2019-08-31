@@ -31,30 +31,20 @@ def main():
     parser.add_argument('--main_style_weight', type=float, default=5000)
     parser.add_argument('--detail_style_weight', type=float, default=400)
     parser.add_argument('--max_iterations', type=int, default=500)
-    # parser.add_argument('-l', '--local', action='store_true', default=False)
     parser.add_argument('-t', '--test_spell',
                         action='store_true', default=False)
-    
-    # parser.add_argument('-t', '--original_colors',
-    #                     action='store_true', default=False)
 
-    # parser.add_argument('--local', type=str,
-    #                     default='/gpu:0', choices=['/gpu:0', '/cpu:0'])
-
+ 
     options, files = parser.parse_known_args()
     print "Face detection options ........ "
     print "Desired margin: ", options.margin
     print "Resolution: ", options.resolution
-
     print "Files: ", files[0]
-
     print "Style transfer options ........ "
     print "Style image: ", options.style_image
-
     print "main_style_weight: ", options.main_style_weight
     print "detail_style_weight: ", options.detail_style_weight
     print "max_iterations: ", options.max_iterations
-    # print "local: ", options.local
     print "test_spell: ", options.test_spell
 
     if not len(files) == 1:
@@ -229,13 +219,12 @@ def run_stylizer_on_spell(basename):
 
 def collect_styled_assets(runid):
     directory = os.path.join("runs", str(runid))
-    styled_directories = os.listdir(directory) 
+    styled_directories = os.listdir(directory)
 
     manifest_path = "image_input/manifest.json"
     with open(manifest_path, 'r') as manifest_file:
         manifest = json.load(manifest_file)
-        name = "{}_{:d}".format(manifest["name"], runid) 
-
+        name = "{}_{:d}".format(manifest["name"], runid)
 
     asset_directory = os.path.join(directory, "{}_{:d}".format(manifest["name"], runid) )
     if not os.path.exists(asset_directory):
@@ -244,10 +233,9 @@ def collect_styled_assets(runid):
     for styled_name in styled_directories:
         img = os.path.join(directory, styled_name, "{}.png".format(styled_name))
         copy2(img, os.path.join(asset_directory))
-    
+
     copy2(manifest_path, asset_directory)
 
     return asset_directory
-
 
 main()

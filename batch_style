@@ -13,10 +13,11 @@ import copy
 
 import neural_style as ns
 
+
 def main():
     manifest = sys.argv[1]
     if sys.argv[1]:
-        with open(sys.argv[1], 'r') as manifest_file:
+        with open(sys.argv[1], "r") as manifest_file:
             manifest = json.load(manifest_file)
 
             args = [
@@ -38,103 +39,33 @@ def main():
                 "--max_size",
                 "1000",
                 "--img_name",
-                os.path.splitext(manifest["filename_styled"])[0]
+                os.path.splitext(manifest["filename_styled"])[0],
             ]
             ns.main(args)
 
-            for face in manifest["faces"]:
-                args = [
-                    "--original_colors",
-                    "--model_weights",
-                    "datasets/imagenet-vgg-verydeep-19.mat",
-                    "--content_img",
-                    face["filename"],
-                    "--style_imgs",
-                    face["style_image"],
-                    "--max_iterations",
-                    str(face["max_iterations"]),
-                    "--device",
-                    "/gpu:0",
-                    "--content_weight",
-                    "10",
-                    "--style_weight",
-                    str(face["style_weight"]),
-                    "--max_size",
-                    "1000",
-                    "--img_name",
-                    os.path.splitext(face["filename_styled"])[0]
-                ]
-                ns.main(args)
+            # for face in manifest["faces"]:
+            #     args = [
+            #         "--original_colors",
+            #         "--model_weights",
+            #         "datasets/imagenet-vgg-verydeep-19.mat",
+            #         "--content_img",
+            #         face["filename"],
+            #         "--style_imgs",
+            #         face["style_image"],
+            #         "--max_iterations",
+            #         str(face["max_iterations"]),
+            #         "--device",
+            #         "/gpu:0",
+            #         "--content_weight",
+            #         "10",
+            #         "--style_weight",
+            #         str(face["style_weight"]),
+            #         "--max_size",
+            #         "1000",
+            #         "--img_name",
+            #         os.path.splitext(face["filename_styled"])[0],
+            #     ]
+            #     ns.main(args)
+
 
 main()
-
-
-# mkdir - p image_output
-
-# for styleImg in kateRob
-# do
-#   for f in grayson basquiatOrig
-#    do
-
-#       for styleWeight in 5000
-#        do
-#            out =${styleImg}_${styleWeight}_${f}
-#             python neural_style.py \
-#                 --original_colors \
-#                 --model_weights datasets/imagenet-vgg-verydeep-19.mat \
-#                 --content_img ${f}.jpg  \
-#                 --style_imgs ${styleImg}.jpg  \
-#                 --max_iterations 500  \
-#                 --max_size 1000    \
-#                 --device / gpu: 0 \
-#                 --img_name $out \
-#                 --content_weight 10 \
-#                 --style_weight ${styleWeight};
-
-#         done
-#     done
-
-#     for f in grayson_0 basquiatOrig_0
-#     do
-
-#        for styleWeight in 400
-#         do
-#            out =${styleImg}_${styleWeight}_${f}
-#             python neural_style.py \
-#                 - -original_colors \
-#                 - -model_weights datasets/imagenet-vgg-verydeep-19.mat \
-#                 - -content_img ${f}.jpg  \
-#                 - -style_imgs ${styleImg}.jpg  \
-#                 - -max_iterations 500  \
-#                 - -max_size 1000    \
-#             - -device / gpu:0 \
-#                 - -img_name $out \
-#                 - -content_weight 10 \
-#                 - -style_weight ${styleWeight};
-
-#         done
-#     done
-# done
-
-
-# python neural_style.py \
-# --model_weights datasets/imagenet-vgg-verydeep-19.mat \
-# --content_img basquiatOrig_0.jpg  \
-# --style_imgs kate.jpg  \
-# --max_iterations 1000  \
-# --max_size 1000    \
-# --device /gpu:0 \
-# --img_name basquiatOrig_0_kate_3 \
-# --content_weight 10 \
-# --style_weight 500;
-
-
-# python neural_style.py  \
-# --model_weights datasets/imagenet-vgg-verydeep-19.mat \
-# --content_img basquiatOrig.jpg  \
-# --style_imgs kate.jpg  \
-# --max_iterations 1000  \
-# --max_size 1000   \
-# --device /gpu:0  \
-# --img_name basquiatOrig_kate_4 \
-# --content_weight 5 --style_weight 1500;
