@@ -181,14 +181,14 @@
             }, 
             "filename": "face_0.png", 
             "filename_styled": "face_0_styled.png", 
-            "max_iterations": 100, 
+            "max_iterations": 500, 
             "style_image": "kateWithDetailOverlayFract.png", 
             "style_weight": 400
         }
     ], 
     "filename": "main.png", 
     "filename_styled": "main_styled.png", 
-    "max_iterations": 100, 
+    "max_iterations": 500, 
     "name": "yayo", 
     "resolution": {
         "x": 1024, 
