@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+
+import sys
+import os
+
+IGNORE_DIRS = ['.DS_Store', 'main_styled']
+
+METADATA_WHITELIST = ["styles[0]", "content_weight", "style_weight", "max_iterations"]
+
+for run in sys.argv[1:]:
+
+    run_dir = os.path.join("runs", run)
+    contents = os.listdir(run_dir)
+    name = [c for c in contents if c not in IGNORE_DIRS][0]
+    meta_fn = os.path.join(run_dir, name,"meta_data.txt" )
+    fields = [run, name]
+    with open(meta_fn, "r") as metadata:
+        for line in metadata:
+            parts = [p.strip() for p in line.split(":")]
+            if parts[0] in METADATA_WHITELIST:
+                fields.append(parts[1].split(" ")[-1])
+    print "\t".join(fields)
+
+    
