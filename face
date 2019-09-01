@@ -230,9 +230,18 @@ def collect_styled_assets(runid):
     if not os.path.exists(asset_directory):
         os.makedirs(asset_directory)
 
-    for styled_name in styled_directories:
-        img = os.path.join(directory, styled_name, "{}.png".format(styled_name))
-        copy2(img, os.path.join(asset_directory))
+
+    new_meta_filename = os.path.join(asset_directory, "meta_data.txt")
+    with open(new_meta_filename, 'a+') as new_meta_file:
+
+
+        for styled_name in styled_directories:
+            img = os.path.join(directory, styled_name, "{}.png".format(styled_name))
+            copy2(img, asset_directory)
+
+            meta_filename = os.path.join(directory, styled_name, "meta_data.txt")
+            with open(meta_filename, 'r') as meta_file:
+                new_meta_file.write(meta_file.read())
 
     copy2(manifest_path, asset_directory)
 
