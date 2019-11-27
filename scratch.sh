@@ -38,7 +38,7 @@ for img
 ./face --resolution 1024 --style_image kateWithDetail.jpg --detail_style_weight 400 
 --main_sty/Users/julian/projects/bot/style_transfer/styles/kateWithDetailOverlay.png /styles/kateWithDetailOverlayFract.png le_weight 20000 extras/julian_grade/hockne-001.png
 
-for f in /Users/julian/projects/bot/style_transfer/extras/julian_grade/new_set/conform/*
+for f in /Users/julian/projects/bot/style_transfer/extras/rn_personal/kids.png /Users/julian/projects/bot/style_transfer/extras/rn_personal/with_nicky.png
 do
 ./face --resolution 1000 --style_image kateWithDetailOverlayFract.png --max_iterations 400 --main_style_weight 10000 $f
 done
